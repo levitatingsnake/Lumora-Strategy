@@ -95,9 +95,9 @@ begin()
 })();
 </script><style id="lumora-portrait-layout">
 /* Mobile portrait: full-bleed animated colour from the film, legible uncropped typography. */
-#intro.video-ready{height:100dvh;min-height:100svh;overflow:hidden}
+#intro.video-ready{height:100dvh;min-height:100svh;overflow:hidden;background:linear-gradient(145deg,#32146b,#176aa0 45%,#531887 75%,#060a18)}
 #lumora-film{z-index:2;object-fit:contain;background:transparent}
-#lumora-film-backdrop{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(34px) saturate(1.55) brightness(.72);z-index:1;pointer-events:none}
+#lumora-film-backdrop{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(24px) saturate(1.65) brightness(.8);z-index:1;pointer-events:none}
 #film-controls{z-index:21}
 @media(max-width:700px) and (orientation:portrait){
  html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -122,11 +122,11 @@ begin()
 (()=>{const video=document.getElementById('lumora-film');if(!video)return;
 const backdrop=video.cloneNode(false);
 backdrop.id='lumora-film-backdrop';backdrop.removeAttribute('id');backdrop.id='lumora-film-backdrop';
-backdrop.muted=true;backdrop.defaultMuted=true;backdrop.playsInline=true;backdrop.autoplay=true;backdrop.setAttribute('aria-hidden','true');backdrop.tabIndex=-1;
+backdrop.src=video.src;backdrop.loop=true;backdrop.muted=true;backdrop.defaultMuted=true;backdrop.playsInline=true;backdrop.autoplay=true;backdrop.setAttribute('aria-hidden','true');backdrop.tabIndex=-1;
 video.parentNode.insertBefore(backdrop,video);
 const sync=()=>{if(Math.abs(backdrop.currentTime-video.currentTime)>.35){try{backdrop.currentTime=video.currentTime}catch(e){}}if(video.paused)backdrop.pause();else backdrop.play().catch(()=>{})};
 video.addEventListener('play',sync);video.addEventListener('pause',sync);video.addEventListener('seeked',sync);
 video.addEventListener('timeupdate',sync);video.addEventListener('ended',()=>backdrop.pause());
-backdrop.play().catch(()=>{});
+backdrop.load();backdrop.play().catch(()=>{});
 })();
 </script></body></html>
