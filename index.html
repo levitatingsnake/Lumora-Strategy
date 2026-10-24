@@ -78,7 +78,7 @@
 </style>
 <script>
 (()=>{const panel=document.getElementById('intro'),replay=document.getElementById('replay');
-const video=document.createElement('video');video.id='lumora-film';video.src='./5929EB95-55A1-4BBF-8C64-275508594BDC.mp4';video.autoplay=true;video.muted=true;video.playsInline=true;video.preload='auto';video.setAttribute('webkit-playsinline','');video.setAttribute('aria-label','Lumora Code Evolution introduction film');
+const video=document.createElement('video');video.id='lumora-film';const landscapeSrc='./5929EB95-55A1-4BBF-8C64-275508594BDC.mp4';const portraitSrc='./lumora-portrait.mp4';video.src=landscapeSrc;const portraitMode=matchMedia('(orientation:portrait)');const probe=document.createElement('video');probe.preload='metadata';probe.src=portraitSrc;probe.addEventListener('loadedmetadata',()=>{if(portraitMode.matches){video.src=portraitSrc;video.load();video.play().catch(()=>{})}});video.autoplay=true;video.muted=true;video.playsInline=true;video.preload='auto';video.setAttribute('webkit-playsinline','');video.setAttribute('aria-label','Lumora Code Evolution introduction film');
 const controls=document.createElement('div');controls.id='film-controls';controls.innerHTML='<button type="button" id="film-start" style="display:none">▶ Play intro</button><button type="button" id="film-sound">Sound off</button><button type="button" id="film-skip">Skip intro ↗</button>';
 const fallback=document.createElement('div');fallback.id='film-fallback';fallback.innerHTML='<h2>LUMORA STRATEGY</h2><p>Possibility · Opportunity · Efficiency · Productivity · Creation</p><button type="button" id="film-continue">Enter Lumora ↗</button>';
 panel.prepend(video,controls,fallback);panel.classList.add('video-ready');
