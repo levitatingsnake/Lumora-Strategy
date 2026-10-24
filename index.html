@@ -79,17 +79,18 @@
 <script>
 (()=>{const panel=document.getElementById('intro'),replay=document.getElementById('replay');
 const video=document.createElement('video');video.id='lumora-film';video.src='./5929EB95-55A1-4BBF-8C64-275508594BDC.mp4';video.autoplay=true;video.muted=true;video.playsInline=true;video.preload='auto';video.setAttribute('webkit-playsinline','');video.setAttribute('aria-label','Lumora Code Evolution introduction film');
-const controls=document.createElement('div');controls.id='film-controls';controls.innerHTML='<button type="button" id="film-sound">Sound off</button><button type="button" id="film-skip">Skip intro ↗</button>';
+const controls=document.createElement('div');controls.id='film-controls';controls.innerHTML='<button type="button" id="film-start" style="display:none">▶ Play intro</button><button type="button" id="film-sound">Sound off</button><button type="button" id="film-skip">Skip intro ↗</button>';
 const fallback=document.createElement('div');fallback.id='film-fallback';fallback.innerHTML='<h2>LUMORA STRATEGY</h2><p>Possibility · Opportunity · Efficiency · Productivity · Creation</p><button type="button" id="film-continue">Enter Lumora ↗</button>';
 panel.prepend(video,controls,fallback);panel.classList.add('video-ready');
 const exit=()=>{video.pause();close()};
-const begin=()=>{clearInterval(timer);panel.classList.remove('hidden');panel.classList.add('video-ready');video.currentTime=0;video.play().catch(()=>{});};
-video.addEventListener('ended',exit);video.addEventListener('error',()=>{video.style.display='none';fallback.style.display='flex';controls.style.display='none'});
+const begin=()=>{clearInterval(timer);panel.classList.remove('hidden');panel.classList.add('video-ready');video.currentTime=0;video.play().catch(()=>{document.getElementById('film-start').style.display='block'});};
+video.addEventListener('ended',exit);video.addEventListener('error',()=>{video.style.display='none';fallback.style.display='flex';controls.style.display='none';fallback.querySelector('p').textContent='The video could not load. You can still enter Lumora.'});
+document.getElementById('film-start').onclick=()=>{video.play().then(()=>document.getElementById('film-start').style.display='none').catch(()=>{})};
 document.getElementById('film-skip').onclick=exit;
 document.getElementById('film-continue').onclick=exit;
 document.getElementById('film-sound').onclick=()=>{video.muted=!video.muted;document.getElementById('film-sound').textContent=video.muted?'Sound off':'Sound on'};
 replay.onclick=begin;
 clearInterval(timer);
-if(sessionStorage.getItem('lumoraSeen')){panel.classList.add('hidden');video.pause()}else{begin()}
+begin()
 })();
 </script></body></html>
